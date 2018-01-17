@@ -4,6 +4,7 @@ class CreateChampions < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :role
       t.string :guide
+      t.references :user, foreign_key: true
 
       t.timestamps
     end

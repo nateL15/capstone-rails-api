@@ -19,8 +19,10 @@ ActiveRecord::Schema.define(version: 20180112162300) do
     t.string "name"
     t.string "role"
     t.string "guide"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_champions_on_user_id"
   end
 
   create_table "examples", force: :cascade do |t|
@@ -41,5 +43,6 @@ ActiveRecord::Schema.define(version: 20180112162300) do
     t.index ["token"], name: "index_users_on_token", unique: true
   end
 
+  add_foreign_key "champions", "users"
   add_foreign_key "examples", "users"
 end

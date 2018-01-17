@@ -1,5 +1,6 @@
-class ChampionsController < ApplicationController
-  before_action :set_champion, only: [:show, :update, :destroy]
+# frozen_string_literal: true
+class ChampionsController < OpenReadController
+  before_action :set_champion, only: [:update, :destroy]
 
   # GET /champions
   def index
@@ -15,7 +16,7 @@ class ChampionsController < ApplicationController
 
   # POST /champions
   def create
-    @champion = Champion.new(champion_params)
+    @champion = current_user.champions.build(champion_params)
 
     if @champion.save
       render json: @champion, status: :created, location: @champion
@@ -41,11 +42,11 @@ class ChampionsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_champion
-      @champion = Champion.find(params[:id])
+      @champion = current_user.champions.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
     def champion_params
-      params.require(:champion).permit(:name, :role)
+      params.require(:champion).permit(:name, :role, :guide)
     end
 end
