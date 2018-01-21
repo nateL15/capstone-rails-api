@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 class ChampionsController < OpenReadController
-  before_action :set_champion, only: [:update, :destroy]
+  before_action :set_champion, only: %i[show update destroy]
+
 
   # GET /champions
   def index
-    @champions = Champion.all
+    @champions = current_user.champions
 
     render json: @champions
   end
